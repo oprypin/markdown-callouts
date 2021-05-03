@@ -1,0 +1,21 @@
+input: |
+  TEST: foo
+
+  TEST: bar
+output: |-
+  <div class="admonition test">
+    <p class="admonition-title">
+      Test
+    </p>
+    <p>
+      foo
+    </p>
+  </div>
+  <div class="admonition test">
+    <p class="admonition-title">
+      Test
+    </p>
+    <p>
+      bar
+    </p>
+  </div>

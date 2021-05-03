@@ -1,0 +1,6 @@
+input: |
+  note: foo
+output: |-
+  <p>
+    note: foo
+  </p>

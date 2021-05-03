@@ -1,0 +1,10 @@
+input: |
+  aaa
+  NOTE: bbb
+  ccc
+output: |-
+  <p>
+    aaa
+  NOTE: bbb
+  ccc
+  </p>

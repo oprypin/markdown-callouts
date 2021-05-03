@@ -1,0 +1,27 @@
+input: |
+  * TEST: foo
+
+  TEST: * foo
+output: |-
+  <ul>
+    <li>
+      <div class="admonition test">
+        <p class="admonition-title">
+          Test
+        </p>
+        <p>
+          foo
+        </p>
+      </div>
+    </li>
+  </ul>
+  <div class="admonition test">
+    <p class="admonition-title">
+      Test
+    </p>
+    <ul>
+      <li>
+        foo
+      </li>
+    </ul>
+  </div>

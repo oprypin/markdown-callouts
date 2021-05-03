@@ -1,0 +1,23 @@
+input: |
+  > TEST: bar
+  > baz
+  >
+  >
+  >
+
+  > test
+output: |-
+  <div class="admonition test">
+    <p class="admonition-title">
+      Test
+    </p>
+    <p>
+      bar
+  baz
+    </p>
+  </div>
+  <blockquote>
+    <p>
+      test
+    </p>
+  </blockquote>
