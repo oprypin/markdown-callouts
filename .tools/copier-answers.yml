@@ -1,8 +1,8 @@
-_commit: 4ffa0ece8
+_commit: a2c083636
 _src_path: gh:oprypin/py-library-template
 copyright_date: 2021
 min_python_version: '3.6'
-mkdocs: false
+mkdocs: true
 project_description: 'Markdown extension: a classier syntax for admonitions'
 project_name: markdown-callouts
 pytest: true

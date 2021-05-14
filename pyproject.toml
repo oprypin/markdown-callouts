@@ -6,6 +6,7 @@ authors = ["Oleh Prypin <oleh@pryp.in>"]
 license = "MIT"
 repository = "https://github.com/oprypin/markdown-callouts"
 keywords = ["markdown", "extensions"]
+readme = "README.md"
 
 [tool.poetry.plugins."markdown.extensions"]
 callouts = "markdown_callouts:CalloutsExtension"

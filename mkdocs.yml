@@ -1,0 +1,26 @@
+site_name: "markdown-callouts"
+site_description: "Markdown extension: a classier syntax for admonitions"
+site_url: "https://oprypin.github.io/markdown-callouts"
+repo_url: "https://github.com/oprypin/markdown-callouts"
+edit_uri: blob/master/docs/
+use_directory_urls: false
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    primary: teal
+    accent: purple
+
+markdown_extensions:
+- pymdownx.details
+- pymdownx.highlight
+- pymdownx.magiclink
+- pymdownx.saneheaders
+- pymdownx.superfences
+- pymdownx.snippets:
+    check_paths: true
+- admonition
+- toc:
+    permalink: "#"
