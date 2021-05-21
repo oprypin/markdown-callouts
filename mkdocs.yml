@@ -7,6 +7,9 @@ use_directory_urls: false
 
 theme:
   name: material
+  features:
+    - navigation.tabs
+    - toc.integrate
   icon:
     repo: fontawesome/brands/github
   palette:
@@ -15,12 +18,21 @@ theme:
 
 markdown_extensions:
 - pymdownx.details
+- pymdownx.tabbed
 - pymdownx.highlight
 - pymdownx.magiclink
 - pymdownx.saneheaders
 - pymdownx.superfences
 - pymdownx.snippets:
     check_paths: true
-- admonition
+- callouts
+- md_in_html
 - toc:
     permalink: "#"
+
+nav:
+  - section-index: /mkdocs-section-index/
+  - literate-nav: /mkdocs-literate-nav/
+  - gen-files: /mkdocs-gen-files/
+  - same-dir: /mkdocs-same-dir/
+  - callouts: index.md
