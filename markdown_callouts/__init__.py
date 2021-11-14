@@ -44,10 +44,17 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
 class _CalloutsTreeprocessor(Treeprocessor):
     def run(self, doc):
         for div in doc:
-            # <div class="admonition note">
-            #   <p class="admonition-title">Note</p>
-            #   <p><strong>Custom title.</strong> Body</p>
-            # </div>
+            # Expecting this:
+            #     <div class="admonition note">
+            #       <p class="admonition-title">Note</p>
+            #       <p><strong>Custom title.</strong> Body</p>
+            #     </div>
+            # And turning it into this:
+            #     <div class="admonition note">
+            #       <p class="admonition-title">Custom title</p>
+            #       <p> Body</p>
+            #     </div>
+
             if (
                 div.tag != "div"
                 or not div.get("class", "").startswith("admonition ")
@@ -65,25 +72,27 @@ class _CalloutsTreeprocessor(Treeprocessor):
             if paragraph.text == "\n":
                 continue
 
+            # Move everything from the bold element into the title.
             title.text = strong.text.lstrip()
             title[:] = strong
-            if title:
+            # Remove last dot at the end of the text (which might instead be the last child's tail).
+            if title:  # Has any child elements
                 last = title[-1]
                 if last.tail:
-                    last.tail = last.tail.rstrip()
-                    if last.tail.endswith("."):
-                        last.tail = last.tail[:-1]
+                    last.tail = _removesuffix(last.tail.rstrip(), ".")
             else:
-                title.text = (title.text or "").rstrip()
-                if title.text.endswith("."):
-                    title.text = title.text[:-1]
+                if title.text:
+                    title.text = _removesuffix(title.text.rstrip(), ".")
+            # Make sure any text immediately following the bold element isn't lost.
             if strong.tail:
                 paragraph.text = (paragraph.text or "") + strong.tail
             paragraph.remove(strong)
-            # <div class="admonition note">
-            #   <p class="admonition-title">Custom title</p>
-            #   <p> Body</p>
-            # </div>
+
+
+def _removesuffix(s, suffix):
+    if s.endswith(suffix):
+        s = s[: -len(suffix)]
+    return s
 
 
 class CalloutsExtension(Extension):
