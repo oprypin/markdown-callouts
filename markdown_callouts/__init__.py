@@ -47,7 +47,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
         self.strip_period = strip_period
 
     def run(self, doc):
-        for div in doc:
+        for div in doc.iter("div"):
             # Expecting this:
             #     <div class="admonition note">
             #       <p class="admonition-title">Note</p>
@@ -58,12 +58,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
             #       <p class="admonition-title">Custom title</p>
             #       <p> Body</p>
             #     </div>
-
-            if (
-                div.tag != "div"
-                or not div.get("class", "").startswith("admonition ")
-                or len(div) < 2
-            ):
+            if not div.get("class", "").startswith("admonition ") or len(div) < 2:
                 continue
             title, paragraph, *_ = div
             if title.tag != "p" or title.get("class") != "admonition-title":

@@ -1,0 +1,21 @@
+input: |
+  > TEST: **Title 1.** foo
+  >
+  > > TEST: **Title 2.** foo
+output: |-
+  <div class="admonition test">
+    <p class="admonition-title">
+      Title 1
+    </p>
+    <p>
+      foo
+    </p>
+    <div class="admonition test">
+      <p class="admonition-title">
+        Title 2
+      </p>
+      <p>
+        foo
+      </p>
+    </div>
+  </div>

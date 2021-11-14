@@ -1,0 +1,15 @@
+input: |
+  NOTE:  
+  Body.  
+  More.
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      Body.
+      <br/>
+      More.
+    </p>
+  </div>
