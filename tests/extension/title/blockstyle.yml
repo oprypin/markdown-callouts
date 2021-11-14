@@ -1,0 +1,15 @@
+input: |
+  > TEST: **Some
+  > title.**
+  >
+  > bar
+output: |-
+  <div class="admonition test">
+    <p class="admonition-title">
+      Some
+  title
+    </p>
+    <p>
+      bar
+    </p>
+  </div>

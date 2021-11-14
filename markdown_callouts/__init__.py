@@ -87,6 +87,8 @@ class _CalloutsTreeprocessor(Treeprocessor):
             if strong.tail:
                 paragraph.text = (paragraph.text or "") + strong.tail
             paragraph.remove(strong)
+            if not paragraph.text and not paragraph and not paragraph.tail:
+                div.remove(paragraph)
 
 
 def _removesuffix(s, suffix):

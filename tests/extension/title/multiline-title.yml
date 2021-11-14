@@ -1,0 +1,30 @@
+input: |
+  NOTE: **Custom
+  multiline
+  title.** Body.
+
+  NOTE: **Custom
+  multiline
+  title.**
+  Body.
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Custom
+  multiline
+  title
+    </p>
+    <p>
+      Body.
+    </p>
+  </div>
+  <div class="admonition note">
+    <p class="admonition-title">
+      Custom
+  multiline
+  title
+    </p>
+    <p>
+      Body.
+    </p>
+  </div>
