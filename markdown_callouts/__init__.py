@@ -9,7 +9,7 @@ from markdown.treeprocessors import Treeprocessor
 
 # Based on https://github.com/Python-Markdown/markdown/blob/4acb949256adc535d6e6cd84c4fb47db8dda2f46/markdown/blockprocessors.py#L277
 class _CalloutsBlockProcessor(BlockQuoteProcessor):
-    REGEX = re.compile(r"(^ {0,3}> ?|\A)([A-Z]{2,}): (.*)", flags=re.M)
+    REGEX = re.compile(r"(^ {0,3}> ?|\A)([A-Z]{2,}):([ \n])(.*)", flags=re.M)
 
     def test(self, parent, block):
         m = self.REGEX.search(block)
@@ -25,7 +25,7 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
         if m:
             before = block[: m.start()]
             self.parser.parseBlocks(parent, [before])
-            block = block[m.start(3) :]
+            block = block[m.start(4) :]
             if m[1]:
                 block = "\n".join(self.clean(line) for line in block.split("\n"))
 
@@ -36,6 +36,9 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
         self.parser.state.set("blockquote")
         self.parser.parseChunk(admon, block)
         self.parser.state.reset()
+
+        if m[3] == "\n":
+            admon[1].text = "\n" + (admon[1].text or "")
 
 
 class _CalloutsTreeprocessor(Treeprocessor):
@@ -58,6 +61,8 @@ class _CalloutsTreeprocessor(Treeprocessor):
                 continue
             strong, *_ = paragraph
             if strong.tag != "strong":
+                continue
+            if paragraph.text == "\n":
                 continue
 
             title.text = strong.text.strip()

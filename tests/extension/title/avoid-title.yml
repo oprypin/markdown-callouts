@@ -1,0 +1,30 @@
+input: |
+  NOTE:
+  **Not a title actually.**
+  Body.
+
+  NOTE:
+  **Not a title actually.** Body.
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      <strong>
+        Not a title actually.
+      </strong>
+      Body.
+    </p>
+  </div>
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      <strong>
+        Not a title actually.
+      </strong>
+      Body.
+    </p>
+  </div>
