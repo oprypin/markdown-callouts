@@ -60,7 +60,9 @@ class _CalloutsTreeprocessor(Treeprocessor):
             if strong.tag != "strong":
                 continue
 
-            title.text = strong.text.strip().rstrip(".")
+            title.text = strong.text.strip()
+            if title.text.endswith("."):
+                title.text = title.text[:-1]
             if strong.tail:
                 paragraph.text = (paragraph.text or "") + strong.tail
             paragraph.remove(strong)
