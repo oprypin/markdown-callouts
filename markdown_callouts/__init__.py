@@ -41,6 +41,10 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
 class _CalloutsTreeprocessor(Treeprocessor):
     def run(self, doc):
         for div in doc:
+            # <div class="admonition note">
+            #   <p class="admonition-title">Note</p>
+            #   <p><strong>Custom title.</strong> Body</p>
+            # </div>
             if (
                 div.tag != "div"
                 or not div.get("class", "").startswith("admonition ")
@@ -60,6 +64,10 @@ class _CalloutsTreeprocessor(Treeprocessor):
             if strong.tail:
                 paragraph.text = (paragraph.text or "") + strong.tail
             paragraph.remove(strong)
+            # <div class="admonition note">
+            #   <p class="admonition-title">Custom title</p>
+            #   <p> Body</p>
+            # </div>
 
 
 class CalloutsExtension(Extension):
