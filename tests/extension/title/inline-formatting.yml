@@ -1,0 +1,15 @@
+input: |
+  TEST: **Custom *fancy* title.** Testing
+output: |-
+  <div class="admonition test">
+    <p class="admonition-title">
+      Custom
+      <em>
+        fancy
+      </em>
+      title
+    </p>
+    <p>
+      Testing
+    </p>
+  </div>

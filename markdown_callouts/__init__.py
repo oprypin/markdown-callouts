@@ -65,9 +65,18 @@ class _CalloutsTreeprocessor(Treeprocessor):
             if paragraph.text == "\n":
                 continue
 
-            title.text = strong.text.strip()
-            if title.text.endswith("."):
-                title.text = title.text[:-1]
+            title.text = strong.text.lstrip()
+            title[:] = strong
+            if title:
+                last = title[-1]
+                if last.tail:
+                    last.tail = last.tail.rstrip()
+                    if last.tail.endswith("."):
+                        last.tail = last.tail[:-1]
+            else:
+                title.text = (title.text or "").rstrip()
+                if title.text.endswith("."):
+                    title.text = title.text[:-1]
             if strong.tail:
                 paragraph.text = (paragraph.text or "") + strong.tail
             paragraph.remove(strong)
