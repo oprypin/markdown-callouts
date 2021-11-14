@@ -261,7 +261,7 @@ You can find more examples (particularly how edge cases are handled) in the [tes
 
 #### Custom titles
 
-A callout block with a custom title is just an extension of the base syntax, where after the capital word and a colon, the first item of the main body must be in bold. This `**strong emphasis**` syntax (or also with `__`) is directly used as the delimitation for the title, according to normal rules of how Markdown handles it. The actual `<strong>` tag will be excluded from the output and its contents will be moved from the paragraph and become the title instead.
+A callout block with a custom title is just an extension of the base syntax, where after the capital word and a colon, the first item of the main body must be in bold. This `**strong emphasis**` syntax (or also with `__`) is directly used as the delimitation for the title, according to normal rules of how Markdown handles it. The actual `<strong>` tag will be excluded from the output and its contents will be moved from the paragraph and become the title instead. You can use any inline Markdown formatting within that main delimiter, and *that* will be preserved. Single newlines are allowed within the delimited title part, again as per normal Markdown rules.
 
 You can find more examples (particularly how edge cases are handled) in the [test cases directory](https://github.com/oprypin/markdown-callouts/tree/master/tests/extension/title).
 

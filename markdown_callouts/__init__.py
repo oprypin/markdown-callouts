@@ -56,7 +56,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
             # And turning it into this:
             #     <div class="admonition note">
             #       <p class="admonition-title">Custom title</p>
-            #       <p> Body</p>
+            #       <p>Body</p>
             #     </div>
             if not div.get("class", "").startswith("admonition ") or len(div) < 2:
                 continue
