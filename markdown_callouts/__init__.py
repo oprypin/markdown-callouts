@@ -63,7 +63,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
             title, paragraph, *_ = div
             if title.tag != "p" or title.get("class") != "admonition-title":
                 continue
-            if paragraph.tag != "p" or not paragraph:
+            if paragraph.tag != "p" or not paragraph or (paragraph.text and paragraph.text.strip()):
                 continue
             strong = paragraph[0]
             if strong.tag != "strong":
