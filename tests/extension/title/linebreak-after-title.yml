@@ -1,0 +1,12 @@
+input: |
+  NOTE: **Some title**  
+  Body.
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Some title
+    </p>
+    <p>
+      Body.
+    </p>
+  </div>

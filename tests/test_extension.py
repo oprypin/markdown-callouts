@@ -9,7 +9,8 @@ from markdown_callouts import CalloutsExtension
 
 @pytest.mark.golden_test("extension/**/*.yml")
 def test_extension(golden):
-    md = Markdown(extensions=[CalloutsExtension()])
+    config = {k: golden[k] for k in ["strip_period"] if golden.get(k) is not None}
+    md = Markdown(extensions=[CalloutsExtension(**config)])
     output = md.convert(golden["input"])
     soup = bs4.BeautifulSoup(output, features="html.parser")
     html = soup.prettify()

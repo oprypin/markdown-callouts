@@ -1,0 +1,20 @@
+input: |
+  WARNING:
+  Due to **foo bar** consider **baz**.
+output: |-
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+    <p>
+      Due to
+      <strong>
+        foo bar
+      </strong>
+      consider
+      <strong>
+        baz
+      </strong>
+      .
+    </p>
+  </div>

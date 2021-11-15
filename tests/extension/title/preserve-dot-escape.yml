@@ -1,0 +1,13 @@
+input: |
+  NOTE: **Custom title\.** Body.
+  Continuing body.
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Custom title.
+    </p>
+    <p>
+      Body.
+  Continuing body.
+    </p>
+  </div>

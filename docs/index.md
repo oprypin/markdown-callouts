@@ -24,7 +24,9 @@ pip install markdown-callouts
      *  as a string: `'callouts'`
      *  as an object: `from markdown_callouts import CalloutsExtension`
 
-The extension has no configuration options.
+The extension is configurable as such:
+
+* `strip_period` (default `true`) - whether to strip the final period from [custom titles](#custom-titles) syntax.
 
 ## Usage
 
@@ -66,7 +68,69 @@ Rather than this (with the "admonition" extension):
 
 The titular word of the callout, transformed from all-caps to just capitalized, becomes the title for the set-apart text.
 
-#### Output
+### Custom titles
+
+If you don't like the deduced title text, you can specify a title of your own, after the all-caps word. For purposes of [graceful degradation](#project-goals), the syntax is exactly as if you wrote one sentence emphasized in bold at the start of the callout.
+
+For example, to get this:
+
+TIP: **Writing custom titles.**
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+massa, nec semper lorem quam in massa.
+
+<table markdown="1">
+<tr><td>
+Write this Markdown with the "callouts" extension:
+</td><td>
+
+```markdown
+TIP: **Writing custom titles.**
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+massa, nec semper lorem quam in massa.
+```
+
+</td></tr>
+<tr><td>
+Rather than this (with the "admonition" extension):
+</td><td>
+
+```markdown
+!!! tip "Writing custom titles"
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.
+```
+
+</td></tr>
+</table>
+
+The linebreak after the title is optional. And it can be an actual linebreak with two spaces at the end of the line as well -- that has no effect on the output, but again can be relevant for [graceful degradation](#project-goals).
+
+Note that the period at the end of the sentence is always dropped from the final title. You are encouraged to write those periods anyway, because when using a "vanilla" renderer, the output will look weird.
+
+=== "Markdown"
+    ```markdown
+    NOTE: **A few more thoughts** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+    NOTE: **A few more thoughts.** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    ```
+
+=== "Intended result"
+    NOTE: **A few more thoughts** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+    NOTE: **A few more thoughts.** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+=== "Result with vanilla Markdown"
+     NOTE:  **A few more thoughts**  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+     NOTE:  **A few more thoughts.**  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+If you want to keep the period in the title, you can escape it with a backslash.
+And to *always* keep periods in the titles, configure the extension with `strip_period: false`.
+
+### Output
 
 The produced HTML is the same with both extensions:
 
@@ -121,6 +185,8 @@ At the start of a block, there needs to be a word in all English capital letters
 
 Inline Markdown (links, italics, etc.) is handled normally for the rest of the text. Block-level Markdown (lists, quotes, etc.) is not allowed.
 
+The space after the colon can instead be a newline as well.
+
 #### Block-level syntax
 
 To allow putting multiple paragraphs into the same callout and enable all of Markdown features, use the block-level syntax, which works the same as a [blockquote](https://daringfireball.net/projects/markdown/syntax#blockquote), but with the mandatory all-caps word at the beginning of it:
@@ -163,7 +229,7 @@ To allow putting multiple paragraphs into the same callout and enable all of Mar
 
 The fact that we used blockquote syntax doesn't mean any actual blockquote is involved, this is still just an admonition. We are just making a clear delineation for the block, but otherwise the angle quotes are discarded.
 
-However... if you'll also be viewing the same Markdown through a renderer that doesn't support this special syntax, it will indeed be a blockquote -- that is [graceful degradation](#project-goals).
+However... if you'll also be viewing the same Markdown through a renderer that doesn't support this special syntax, it will indeed be a blockquote -- that is also [graceful degradation](#project-goals).
 
 ??? "Compare this to the [Admonition][] extension"
 
@@ -193,13 +259,39 @@ However... if you'll also be viewing the same Markdown through a renderer that d
 
 You can find more examples (particularly how edge cases are handled) in the [test cases directory](https://github.com/oprypin/markdown-callouts/tree/master/tests/extension).
 
+#### Custom titles
+
+A callout block with a custom title is just an extension of the base syntax, where after the capital word and a colon, the first item of the main body must be in bold. This `**strong emphasis**` syntax (or also with `__`) is directly used as the delimitation for the title, according to normal rules of how Markdown handles it. The actual `<strong>` tag will be excluded from the output and its contents will be moved from the paragraph and become the title instead. You can use any inline Markdown formatting within that main delimiter, and *that* will be preserved. Single newlines are allowed within the delimited title part, again as per normal Markdown rules.
+
+You can find more examples (particularly how edge cases are handled) in the [test cases directory](https://github.com/oprypin/markdown-callouts/tree/master/tests/extension/title).
+
+#### Avoiding callouts syntax
+
+There are several ways of avoiding triggering the "callouts" syntax, in case you actually want to just write a word in all-capital letters followed by a colon.
+
+In that case, precede the line with one space (which will not be represented in the final HTML):
+
+```markdown
+ EXAMPLE: Hi.
+```
+
+And if you happen to need to start your callout with a sentence in bold (without picking it up as the title), make sure to put a newline first:
+
+=== "Markdown"
+    ```markdown
+    NOTE: **This is a title.** Body.
+
+    NOTE:
+    **Not a title actually.** Body.
+    ```
+
+=== "Result"
+    NOTE: **This is a title.** Body.
+
+    NOTE:
+    **Not a title actually.** Body.
+
 ## Further features
-
-Actually that's all! See also: [Project goals](#project-goals).
-
-### Custom titles
-
-Not supported at the moment, mainly because the syntax choice for it can be controversial. Currently the title of the admonition will always be the titular word of the callout as written. If you need a custom title, you can still use the *[admonition][]*   extension alongside.
 
 ### Custom look
 
@@ -210,4 +302,4 @@ And see another example for inspiration: [Source](https://github.com/mkdocstring
 
 ## Project goals
 
-The goal of this project is to have a **subset** of features of the [admonition][] extension, under an alternate syntax that allows for **graceful degradation**.
+The goal of this project is to support the same features as the [admonition][] extension, under an alternate syntax that allows for **graceful degradation** (you can search for mentions of that on this page). That means that the page can be previewed in a "vanilla" Markdown renderer and still look fully legible, though missing some styling. That can be useful to keep your documents nicely viewable on Web source hosting such as GitHub even if that won't be your primary hosting.

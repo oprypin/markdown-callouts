@@ -1,0 +1,11 @@
+input: |
+  NOTE: **A few more thoughts** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      A few more thoughts
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </p>
+  </div>
