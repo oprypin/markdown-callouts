@@ -1,0 +1,13 @@
+input: |
+  WARNING:
+
+  WARNING:  
+output: |-
+  <p>
+    WARNING:
+  </p>
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+  </div>

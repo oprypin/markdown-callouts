@@ -1,0 +1,32 @@
+input: |
+  > NOTE:
+  > Foo.
+
+  > a
+  > Bar.
+
+  > WARNING:
+  > Baz.
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      Foo.
+    </p>
+  </div>
+  <blockquote>
+    <p>
+      a
+  Bar.
+    </p>
+  </blockquote>
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+    <p>
+      Baz.
+    </p>
+  </div>
