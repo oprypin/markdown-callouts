@@ -1,0 +1,22 @@
+input: |
+  > QUOTE: **[foo]**
+  >
+  > bar
+  >
+  > baz
+
+  [foo]: https://example.org
+output: |-
+  <div class="admonition quote">
+    <p class="admonition-title">
+      <a href="https://example.org">
+        foo
+      </a>
+    </p>
+    <p>
+      bar
+    </p>
+    <p>
+      baz
+    </p>
+  </div>

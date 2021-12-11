@@ -72,7 +72,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
                 continue
 
             # Move everything from the bold element into the title.
-            title.text = strong.text.lstrip()
+            title.text = strong.text and strong.text.lstrip()
             title[:] = strong
             # Remove last dot at the end of the text (which might instead be the last child's tail).
             if title:  # Has any child elements
