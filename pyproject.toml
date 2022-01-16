@@ -13,7 +13,7 @@ callouts = "markdown_callouts:CalloutsExtension"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-Markdown = "^3.3"
+Markdown = "^3.3.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
