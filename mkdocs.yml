@@ -18,7 +18,8 @@ theme:
 
 markdown_extensions:
 - pymdownx.details
-- pymdownx.tabbed
+- pymdownx.tabbed:
+    alternate_style: true
 - pymdownx.highlight
 - pymdownx.magiclink
 - pymdownx.saneheaders
