@@ -13,11 +13,7 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
 
     def test(self, parent, block):
         m = self.REGEX.search(block)
-        return (
-            bool(m)
-            and (m[1] or not self.parser.state.isstate("blockquote"))
-            and not util.nearing_recursion_limit()
-        )
+        return bool(m) and (m[1] or not self.parser.state) and not util.nearing_recursion_limit()
 
     def run(self, parent, blocks):
         block = blocks.pop(0)
