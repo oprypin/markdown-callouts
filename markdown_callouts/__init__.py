@@ -63,7 +63,11 @@ class _CalloutsTreeprocessor(Treeprocessor):
             title, paragraph, *_ = div
             if title.tag != "p" or title.get("class") != "admonition-title":
                 continue
-            if paragraph.tag != "p" or not paragraph or (paragraph.text and paragraph.text.strip()):
+            if (
+                paragraph.tag != "p"
+                or not len(paragraph)
+                or (paragraph.text and paragraph.text.strip())
+            ):
                 continue
             strong = paragraph[0]
             if strong.tag != "strong":
@@ -75,7 +79,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
             title.text = strong.text and strong.text.lstrip()
             title[:] = strong
             # Remove last dot at the end of the text (which might instead be the last child's tail).
-            if title:  # Has any child elements
+            if len(title):  # Has any child elements
                 last = title[-1]
                 if last.tail:
                     last.tail = last.tail.rstrip()
@@ -91,12 +95,12 @@ class _CalloutsTreeprocessor(Treeprocessor):
                 paragraph.text = (paragraph.text or "") + strong.tail
             # Finally, remove the original element, also drop a possible linebreak afterwards.
             paragraph.remove(strong)
-            if paragraph and not paragraph.text:
+            if len(paragraph) and not paragraph.text:
                 br = paragraph[0]
                 if br.tag == "br":
                     paragraph.text = br.tail
                     paragraph.remove(br)
-            if not paragraph and not paragraph.text and not paragraph.tail:
+            if not len(paragraph) and not paragraph.text and not paragraph.tail:
                 div.remove(paragraph)
 
 
