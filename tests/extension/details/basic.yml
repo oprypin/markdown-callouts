@@ -1,0 +1,11 @@
+input: |
+  >? NOTE: hello
+output: |-
+  <details class="note">
+    <summary>
+      Note
+    </summary>
+    <p>
+      hello
+    </p>
+  </details>

@@ -1,0 +1,13 @@
+input: |
+  >?NOTE: hello
+  >world
+output: |-
+  <details class="note">
+    <summary>
+      Note
+    </summary>
+    <p>
+      hello
+  world
+    </p>
+  </details>

@@ -1,0 +1,18 @@
+input: |
+  >! TIP: test
+  > test
+  >
+  > hi
+output: |-
+  <details class="tip" open="open">
+    <summary>
+      Tip
+    </summary>
+    <p>
+      test
+  test
+    </p>
+    <p>
+      hi
+    </p>
+  </details>

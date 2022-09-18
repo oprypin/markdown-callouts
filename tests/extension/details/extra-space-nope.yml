@@ -1,0 +1,8 @@
+input: |
+  > ?NOTE: hello
+output: |-
+  <blockquote>
+    <p>
+      ?NOTE: hello
+    </p>
+  </blockquote>
