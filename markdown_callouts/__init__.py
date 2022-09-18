@@ -1,5 +1,6 @@
 import re
 import xml.etree.ElementTree as etree
+from typing import List
 
 from markdown import Markdown, util
 from markdown.blockprocessors import BlockQuoteProcessor
@@ -11,23 +12,25 @@ from markdown.treeprocessors import Treeprocessor
 class _CalloutsBlockProcessor(BlockQuoteProcessor):
     REGEX = re.compile(r"(^ {0,3}> ?|\A)([A-Z]{2,}):([ \n])(.*)", flags=re.M)
 
-    def test(self, parent, block):
+    def test(self, parent: etree.Element, block: str) -> bool:
         m = self.REGEX.search(block)
         return (
-            bool(m)
+            m is not None
             and (m[1] or not self.parser.state.isstate("blockquote"))
-            and not util.nearing_recursion_limit()
+            and not util.nearing_recursion_limit()  # type: ignore
         )
 
-    def run(self, parent, blocks):
+    def run(self, parent: etree.Element, blocks: List[str]) -> None:
         block = blocks.pop(0)
         m = self.REGEX.search(block)
-        if m:
-            before = block[: m.start()]
-            self.parser.parseBlocks(parent, [before])
-            block = block[m.start(4) :]
-            if m[1]:
-                block = "\n".join(self.clean(line) for line in block.split("\n"))
+        if not m:
+            return
+
+        before = block[: m.start()]
+        self.parser.parseBlocks(parent, [before])
+        block = block[m.start(4) :]
+        if m[1]:
+            block = "\n".join(self.clean(line) for line in block.split("\n"))
 
         admon = etree.SubElement(parent, "div", {"class": "admonition " + m[2].lower()})
         title = etree.SubElement(admon, "p", {"class": "admonition-title"})
@@ -42,11 +45,11 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
 
 
 class _CalloutsTreeprocessor(Treeprocessor):
-    def __init__(self, strip_period: bool):
+    def __init__(self, strip_period: bool) -> None:
         super().__init__()
         self.strip_period = strip_period
 
-    def run(self, doc):
+    def run(self, doc: etree.Element) -> None:
         for div in doc.iter("div"):
             # Expecting this:
             #     <div class="admonition note">
@@ -105,7 +108,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
 
 
 class CalloutsExtension(Extension):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         self.config = {
             "strip_period": [
                 True,

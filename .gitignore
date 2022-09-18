@@ -1,6 +1,7 @@
 /dist/
 site/
 .pytype/
+.mypy_cache/
 .pytest_cache/
 __pycache__/
 *.egg-info/
