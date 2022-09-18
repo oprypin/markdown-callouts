@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "markdown-callouts"
-version = "0.2.0"
+version = "0.3.0"
 description = "Markdown extension: a classier syntax for admonitions"
 authors = ["Oleh Prypin <oleh@pryp.in>"]
 license = "MIT"
