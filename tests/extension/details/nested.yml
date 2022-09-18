@@ -1,0 +1,40 @@
+input: |
+  >! TIP: test
+  >
+  > > >! NOTE: cool
+  > > > cool
+  > >
+  > > interesting
+  >
+  > >? NOTE: hmm
+output: |-
+  <details class="tip" open="open">
+    <summary>
+      Tip
+    </summary>
+    <p>
+      test
+    </p>
+    <blockquote>
+      <details class="note" open="open">
+        <summary>
+          Note
+        </summary>
+        <p>
+          cool
+  cool
+        </p>
+      </details>
+      <p>
+        interesting
+      </p>
+    </blockquote>
+    <details class="note">
+      <summary>
+        Note
+      </summary>
+      <p>
+        hmm
+      </p>
+    </details>
+  </details>

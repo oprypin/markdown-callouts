@@ -10,7 +10,7 @@ from markdown.treeprocessors import Treeprocessor
 
 # Based on https://github.com/Python-Markdown/markdown/blob/4acb949256adc535d6e6cd84c4fb47db8dda2f46/markdown/blockprocessors.py#L277
 class _CalloutsBlockProcessor(BlockQuoteProcessor):
-    REGEX = re.compile(r"(^ {0,3}> ?|\A)([A-Z]{2,}):([ \n])(.*)", flags=re.M)
+    REGEX = re.compile(r"(^ {0,3}>([!?])? ?|\A)([A-Z]{2,}):([ \n])(.*)", flags=re.M)
 
     def test(self, parent: etree.Element, block: str) -> bool:
         m = self.REGEX.search(block)
@@ -28,19 +28,25 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
 
         before = block[: m.start()]
         self.parser.parseBlocks(parent, [before])
-        block = block[m.start(4) :]
+        block = block[m.start(5) :]
         if m[1]:
             block = "\n".join(self.clean(line) for line in block.split("\n"))
+        kind = m[3]
 
-        admon = etree.SubElement(parent, "div", {"class": "admonition " + m[2].lower()})
-        title = etree.SubElement(admon, "p", {"class": "admonition-title"})
-        title.text = m[2].title()
+        if m[2]:
+            admon = etree.SubElement(parent, "details", {"class": kind.lower()})
+            if m[2] == "!":
+                admon.set("open", "open")
+        else:
+            admon = etree.SubElement(parent, "details", {"class": "admonition " + kind.lower()})
+        title = etree.SubElement(admon, "summary", {"class": "admonition-title"})
+        title.text = kind.title()
 
         self.parser.state.set("blockquote")
         self.parser.parseChunk(admon, block)
         self.parser.state.reset()
 
-        if m[3] == "\n":
+        if m[4] == "\n":
             admon[1].text = "\n" + (admon[1].text or "")
 
 
@@ -49,23 +55,40 @@ class _CalloutsTreeprocessor(Treeprocessor):
         super().__init__()
         self.strip_period = strip_period
 
-    def run(self, doc: etree.Element) -> None:
-        for div in doc.iter("div"):
+    def run(self, doc: etree.Element):
+        for root in doc.iter("details"):
             # Expecting this:
-            #     <div class="admonition note">
-            #       <p class="admonition-title">Note</p>
+            #     <details class="admonition note">
+            #       <summary class="admonition-title">Note</summary>
             #       <p><strong>Custom title.</strong> Body</p>
-            #     </div>
+            #     </details>
             # And turning it into this:
+            #     <details class="note">
+            #       <summary>Custom title</summary>
+            #       <p>Body</p>
+            #     </div>
+            # Or this:
             #     <div class="admonition note">
             #       <p class="admonition-title">Custom title</p>
             #       <p>Body</p>
             #     </div>
-            if not div.get("class", "").startswith("admonition ") or len(div) < 2:
+            if not root.get("class"):
                 continue
-            title, paragraph, *_ = div
-            if title.tag != "p" or title.get("class") != "admonition-title":
+            title = root[0]
+            if title.tag != "summary" or title.get("class") != "admonition-title":
                 continue
+
+            # Change <details> back to <div> if it was a normal admonition.
+            if root.get("class", "").startswith("admonition "):
+                root.tag = "div"
+                title.tag = "p"
+            else:
+                title.attrib.pop("class", None)
+
+            # Find the first paragraph and a <strong> element in it.
+            if len(root) < 2:
+                continue
+            paragraph = root[1]
             if (
                 paragraph.tag != "p"
                 or not len(paragraph)
@@ -104,7 +127,7 @@ class _CalloutsTreeprocessor(Treeprocessor):
                     paragraph.text = br.tail
                     paragraph.remove(br)
             if not len(paragraph) and not paragraph.text and not paragraph.tail:
-                div.remove(paragraph)
+                root.remove(paragraph)
 
 
 class CalloutsExtension(Extension):

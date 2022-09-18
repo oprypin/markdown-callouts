@@ -42,6 +42,16 @@ massa, nec semper lorem quam in massa.
 
 ![Screenshot](https://user-images.githubusercontent.com/371383/119063216-dc001700-b9d8-11eb-8092-763e5d02d9f4.png)
 
+Collapsible blocks also have a syntax for them:
+
+```markdown
+>? NOTE: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+> nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+> massa, nec semper lorem quam in massa.
+```
+
+This instead shows up as an initially-closed `<details>` block.
+
 ### Graceful degradation
 
 This extension produces the same results as the *[admonition][]* extension, but with a syntax that is much less intrusive and has a very reasonable fallback look for "vanilla" renderers.

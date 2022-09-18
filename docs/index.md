@@ -1,9 +1,10 @@
 # markdown-callouts
 
-**Extension for [Python-Markdown][]: a classier syntax for [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#usage)**
+**Extension for [Python-Markdown][]: a classier syntax for [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#usage) and [collapsible blocks](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#collapsible-blocks)**
 
 [python-markdown]: https://python-markdown.github.io/
 [admonition]: https://python-markdown.github.io/extensions/admonition/
+[details]: https://facelessuser.github.io/pymdown-extensions/extensions/details/
 [mkdocs]: https://www.mkdocs.org/
 
 ## Installation
@@ -108,42 +109,100 @@ Rather than this (with the "admonition" extension):
 
 The linebreak after the title is optional. And it can be an actual linebreak with two spaces at the end of the line as well -- that has no effect on the output, but again can be relevant for [graceful degradation](#project-goals).
 
-Note that the period at the end of the sentence is always dropped from the final title. You are encouraged to write those periods anyway, because when using a "vanilla" renderer, the output will look weird.
+??? note "About the period at the end of the sentence"
+    The period at the end of the sentence is always dropped from the final title. You are encouraged to write those periods anyway, because when using a "vanilla" renderer, the output will look weird.
 
-=== "Markdown"
-    ```markdown
-    NOTE: **A few more thoughts** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    === "Markdown"
+        ```markdown
+        NOTE: **A few more thoughts** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-    NOTE: **A few more thoughts.** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    ```
+        NOTE: **A few more thoughts.** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        ```
 
-=== "Intended result"
-    NOTE: **A few more thoughts** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    === "Intended result"
+        NOTE: **A few more thoughts** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-    NOTE: **A few more thoughts.** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        NOTE: **A few more thoughts.** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-=== "Result with vanilla Markdown"
-     NOTE:  **A few more thoughts**  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    === "Result with vanilla Markdown"
+        NOTE:  **A few more thoughts**  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-     NOTE:  **A few more thoughts.**  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        NOTE:  **A few more thoughts.**  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-If you want to keep the period in the title, you can escape it with a backslash.
-And to *always* keep periods in the titles, configure the extension with `strip_period: false`.
+    If you want to keep the period in the title, you can escape it with a backslash.
+    And to *always* keep periods in the titles, configure the extension with `strip_period: false`.
+
+### Collapsible blocks
+
+(See first: [Block-level syntax](#block-level-syntax))
+
+To get the following collapsed `<details>` block, just add a question mark right after the blockquote symbol:
+
+??? tip "Click me to read more"
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod nulla.
+
+    Curabitur feugiat, tortor non consequat finibus, justo purus auctor massa, nec
+    semper lorem quam in massa.
+
+<table markdown="1">
+<tr><td>
+Write this Markdown with the "callouts" extension:
+</td><td>
+
+```markdown
+>? TIP: **Click me to read more.**
+>
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod nulla.
+>
+> Curabitur feugiat, tortor non consequat finibus, justo purus auctor massa, nec
+> semper lorem quam in massa.
+```
+
+</td></tr>
+<tr><td>
+Rather than this (with the "details" extension):
+</td><td>
+
+```markdown
+??? tip "Click me to read more"
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod nulla.
+
+    Curabitur feugiat, tortor non consequat finibus, justo purus auctor massa, nec
+    semper lorem quam in massa.
+```
+
+</td></tr>
+</table>
+
+The block can alternatively be initially open. Just write `>!` instead of `>?`.
 
 ### Output
 
-The produced HTML is the same with both extensions:
+The produced HTML is the same with [both][admonition] [extensions][details] that this replaces:
 
-```html
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
-nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
-massa, nec semper lorem quam in massa.</p>
-</div>
-```
+=== "Same as 'admonition'"
 
-You may notice that the HTML contains no explicit styling whatsoever. That is because that's supposed to be handled through CSS that accompanies it. In case of MkDocs, that's handled by themes -- if they choose to support styling for the classes `.admonition`, `.admonition-title`, etc.
+    ```html
+    <div class="admonition note">
+    <p class="admonition-title">Note</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.</p>
+    </div>
+    ```
+
+=== "Same as 'details'"
+
+    ```html
+    <details class="note">
+    <summary>Note</summary>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+    massa, nec semper lorem quam in massa.</p>
+    </details>
+    ```
+
+You may notice that the HTML contains no explicit styling whatsoever. That is because that's supposed to be handled through CSS that accompanies it. In case of MkDocs, that's handled by themes -- if they choose to support styling for the classes `.admonition`, `.admonition-title` or the tags `details`, `summary`.
 
 In addition to the always-present class `admonition`, another CSS class will be added that is equal to the title of the "callout", in lowercase. The stylesheet can then choose to specially distinguish the style for a few select identifiers out of those. ([Example theme](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types))
 
@@ -258,6 +317,53 @@ However... if you'll also be viewing the same Markdown through a renderer that d
         Next block will not be picked up.
 
 You can find more examples (particularly how edge cases are handled) in the [test cases directory](https://github.com/oprypin/markdown-callouts/tree/master/tests/extension).
+
+#### Collapsible block syntax
+
+Collapsible block syntax is a simple extension of the block syntax.  
+Instead of opening the blockquote with `>`:
+
+* write `>?` to get a `<details>` tag;
+* write `>!` to get a `<details open>` tag.
+
+To allow putting multiple paragraphs into the same callout and enable all of Markdown features, use the block-level syntax, which works the same as a [blockquote](https://daringfireball.net/projects/markdown/syntax#blockquote), but with the mandatory all-caps word at the beginning of it:
+
+=== "Markdown"
+    ```markdown
+    >? EXAMPLE: Hello world!
+    >
+    > * Item 1
+    > * Item 2
+    >
+    > Still going...
+
+    Next block will not be picked up.
+    ```
+
+=== "Result"
+    >? EXAMPLE: Hello world!
+    >
+    > * Item 1
+    > * Item 2
+    >
+    > Still going...
+
+    Next block will not be picked up.
+
+=== "HTML"
+    ```html
+    <details class="example">
+    <summary>Example</summary>
+    <p>Hello world!</p>
+    <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    </ul>
+    <p>Still going...</p>
+    </details>
+    ```
+
+You can find more examples (particularly how edge cases are handled) in the [test cases directory](https://github.com/oprypin/markdown-callouts/tree/master/tests/details).
 
 #### Custom titles
 
