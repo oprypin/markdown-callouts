@@ -12,7 +12,7 @@ readme = "README.md"
 callouts = "markdown_callouts:CalloutsExtension"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 Markdown = "^3.3.3"
 
 [tool.poetry.dev-dependencies]

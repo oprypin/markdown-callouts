@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import re
 import xml.etree.ElementTree as etree
-from typing import List
 
 from markdown import Markdown, util
 from markdown.blockprocessors import BlockQuoteProcessor
@@ -20,7 +21,7 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
             and not util.nearing_recursion_limit()  # type: ignore
         )
 
-    def run(self, parent: etree.Element, blocks: List[str]) -> None:
+    def run(self, parent: etree.Element, blocks: list[str]) -> None:
         block = blocks.pop(0)
         m = self.REGEX.search(block)
         if not m:
