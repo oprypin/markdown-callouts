@@ -13,7 +13,12 @@ __version__ = "0.3.0"
 
 # Based on https://github.com/Python-Markdown/markdown/blob/4acb949256adc535d6e6cd84c4fb47db8dda2f46/markdown/blockprocessors.py#L277
 class _CalloutsBlockProcessor(BlockQuoteProcessor):
-    REGEX = re.compile(r"(^ {0,3}>([!?])? ?|\A)([A-Z]{2,}):([ \n])(.*)", flags=re.M)
+    def __init__(self, parser, ms_alerts: bool) -> None:
+        super().__init__(parser)
+        self.REGEX = re.compile(self._get_regex_str(ms_alerts), flags=re.M)
+
+    def _get_regex_str(self, ms_alerts: bool):
+        return r"(^ {0,3}>([!?])? ?|\A)\[\!([A-Z]{2,})\]([ \n])(.*)" if ms_alerts else r"(^ {0,3}>([!?])? ?|\A)([A-Z]{2,}):([ \n])(.*)"
 
     def test(self, parent: etree.Element, block: str) -> bool:
         m = self.REGEX.search(block)
@@ -31,18 +36,21 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
 
         before = block[: m.start()]
         self.parser.parseBlocks(parent, [before])
-        block = block[m.start(5) :]
+        block = block[m.start(5):]
         if m[1]:
             block = "\n".join(self.clean(line) for line in block.split("\n"))
         kind = m[3]
 
         if m[2]:
-            admon = etree.SubElement(parent, "details", {"class": kind.lower()})
+            admon = etree.SubElement(
+                parent, "details", {"class": kind.lower()})
             if m[2] == "!":
                 admon.set("open", "open")
         else:
-            admon = etree.SubElement(parent, "details", {"class": "admonition " + kind.lower()})
-        title = etree.SubElement(admon, "summary", {"class": "admonition-title"})
+            admon = etree.SubElement(
+                parent, "details", {"class": "admonition " + kind.lower()})
+        title = etree.SubElement(
+            admon, "summary", {"class": "admonition-title"})
         title.text = kind.title()
 
         self.parser.state.set("blockquote")
@@ -140,13 +148,19 @@ class CalloutsExtension(Extension):
                 True,
                 "Remove the period (dot '.') at the end of custom titles - Default: True",
             ],
+            "ms_alerts": [
+                False,
+                "Microsoft Alerts syntax - Default: False",
+            ],
         }
         super().__init__(**kwargs)
 
     def extendMarkdown(self, md: Markdown) -> None:
         parser = md.parser  # type: ignore
         parser.blockprocessors.register(
-            _CalloutsBlockProcessor(parser), "callouts", 21  # Right before blockquote
+            # Right before blockquote
+            _CalloutsBlockProcessor(
+                parser, self.getConfig("ms_alerts")), "callouts", 21
         )
         md.treeprocessors.register(
             _CalloutsTreeprocessor(self.getConfig("strip_period")),
