@@ -1,0 +1,39 @@
+input: |
+  * > **Note**: foo
+  <!-- -->
+  > * **Note**: foo
+  <!-- -->
+  > **Note**: * foo
+output: |-
+  <ul>
+    <li>
+      <div class="admonition note">
+        <p class="admonition-title">
+          Note
+        </p>
+        <p>
+          foo
+        </p>
+      </div>
+    </li>
+  </ul>
+  <!-- -->
+  <blockquote>
+    <ul>
+      <li>
+        <strong>
+          Note
+        </strong>
+        : foo
+      </li>
+    </ul>
+  </blockquote>
+  <!-- -->
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      * foo
+    </p>
+  </div>

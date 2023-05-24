@@ -133,6 +133,61 @@ class _CalloutsTreeprocessor(Treeprocessor):
                 root.remove(paragraph)
 
 
+class _GitHubCalloutsTreeprocessor(Treeprocessor):
+    def run(self, doc: etree.Element):
+        for root in doc.iter("blockquote"):
+            # Expecting this:
+            #     <blockquote>
+            #       <p><strong>Note</strong></p>
+            #       <p>Body</p>
+            #     </blockquote>
+            # And turning it into this:
+            #     <div class="admonition note">
+            #       <p class="admonition-title">Note</p>
+            #       <p>Body</p>
+            #     </div>
+            if root.attrib:
+                continue
+            if len(root) == 0:
+                continue
+            paragraph = root[0]
+            if (
+                paragraph.tag != "p"
+                or not len(paragraph)
+                or (paragraph.text and paragraph.text.strip())
+            ):
+                continue
+            strong = paragraph[0]
+            if strong.tag != "strong":
+                continue
+            # Support nested italic.
+            title_el = strong
+            while len(title_el) == 1 and not title_el.text and not title_el[0].tail:
+                title_el = title_el[0]
+            if title_el.text not in ("Note", "Warning"):
+                continue
+            # Move everything from the bold element into the title.
+            root.tag = "div"
+            root.set("class", "admonition " + title_el.text.strip().lower())
+            paragraph.remove(strong)
+            if strong.tail:
+                paragraph.text = (paragraph.text or "") + strong.tail
+                strong.tail = None
+            root.insert(0, strong)
+            strong.tag = "p"
+            strong.set("class", "admonition-title")
+            # Finally, remove the original element, also drop a possible ":" and linebreak afterwards.
+            if paragraph.text and paragraph.text.startswith(":"):
+                paragraph.text = paragraph.text[1:]
+            if len(paragraph) and not paragraph.text:
+                br = paragraph[0]
+                if br.tag == "br":
+                    paragraph.text = br.tail
+                    paragraph.remove(br)
+            if not len(paragraph) and not paragraph.text and not paragraph.tail:
+                root.remove(paragraph)
+
+
 class CalloutsExtension(Extension):
     def __init__(self, **kwargs) -> None:
         self.config = {
@@ -140,19 +195,30 @@ class CalloutsExtension(Extension):
                 True,
                 "Remove the period (dot '.') at the end of custom titles - Default: True",
             ],
+            "syntax": [
+                ["callouts", "github"],
+                "The set of supported syntax variations - Default: [callouts, github]",
+            ],
         }
         super().__init__(**kwargs)
 
     def extendMarkdown(self, md: Markdown) -> None:
         parser = md.parser  # type: ignore
-        parser.blockprocessors.register(
-            _CalloutsBlockProcessor(parser), "callouts", 21  # Right before blockquote
-        )
-        md.treeprocessors.register(
-            _CalloutsTreeprocessor(self.getConfig("strip_period")),
-            "callouts",
-            19,  # Right after inline
-        )
+        if "callouts" in self.getConfig("syntax"):
+            parser.blockprocessors.register(
+                _CalloutsBlockProcessor(parser), "callouts", 21  # Right before blockquote
+            )
+            md.treeprocessors.register(
+                _CalloutsTreeprocessor(self.getConfig("strip_period")),
+                "callouts",
+                19,  # Right after inline
+            )
+        if "github" in self.getConfig("syntax"):
+            md.treeprocessors.register(
+                _GitHubCalloutsTreeprocessor(),
+                "callouts-github",
+                18.9,  # Right after inline
+            )
 
 
 makeExtension = CalloutsExtension

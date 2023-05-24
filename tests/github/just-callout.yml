@@ -1,0 +1,32 @@
+input: |
+  > **Warning**:
+
+  hi
+  > **Warning**
+  >
+  <!-- -->
+  >**Warning**  
+output: |-
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+  </div>
+  <p>
+    hi
+  </p>
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+    <p>
+    </p>
+  </div>
+  <!-- -->
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+    <p>
+    </p>
+  </div>

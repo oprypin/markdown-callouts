@@ -1,0 +1,14 @@
+input: |
+  > **Note**:
+  foo
+  bar
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      foo
+  bar
+    </p>
+  </div>
