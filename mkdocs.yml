@@ -8,6 +8,7 @@ use_directory_urls: false
 theme:
   name: material
   features:
+    - content.action.edit
     - navigation.tabs
     - toc.integrate
   icon:
@@ -17,23 +18,33 @@ theme:
     accent: purple
 
 markdown_extensions:
-- pymdownx.details
-- pymdownx.tabbed:
-    alternate_style: true
-- pymdownx.highlight
-- pymdownx.magiclink
-- pymdownx.saneheaders
-- pymdownx.superfences
-- pymdownx.snippets:
-    check_paths: true
-- callouts
-- md_in_html
-- toc:
-    permalink: "#"
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight
+  - pymdownx.magiclink
+  - pymdownx.saneheaders
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      check_paths: true
+      base_path:
+        - !relative $config_dir
+  - callouts
+  - md_in_html
+  - toc:
+      permalink: "#"
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  nav:
+    absolute_links: ignore
 
 nav:
   - section-index: /mkdocs-section-index/
   - literate-nav: /mkdocs-literate-nav/
   - gen-files: /mkdocs-gen-files/
   - same-dir: /mkdocs-same-dir/
+  - code-validator: /mkdocs-code-validator/
   - callouts: index.md
