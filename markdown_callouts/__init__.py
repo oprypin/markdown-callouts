@@ -146,7 +146,9 @@ class CalloutsExtension(Extension):
     def extendMarkdown(self, md: Markdown) -> None:
         parser = md.parser  # type: ignore
         parser.blockprocessors.register(
-            _CalloutsBlockProcessor(parser), "callouts", 21  # Right before blockquote
+            _CalloutsBlockProcessor(parser),
+            "callouts",
+            21,  # Right before blockquote
         )
         md.treeprocessors.register(
             _CalloutsTreeprocessor(self.getConfig("strip_period")),
