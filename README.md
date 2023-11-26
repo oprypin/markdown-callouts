@@ -3,7 +3,7 @@
 **Extension for [Python-Markdown][]: a classier syntax for [admonitions](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#usage)**
 
 [![PyPI](https://img.shields.io/pypi/v/markdown-callouts)](https://pypi.org/project/markdown-callouts/)
-[![GitHub](https://img.shields.io/github/license/oprypin/markdown-callouts)](https://github.com/oprypin/markdown-callouts/blob/master/LICENSE.md)
+[![License](https://img.shields.io/github/license/oprypin/markdown-callouts)](https://github.com/oprypin/markdown-callouts/blob/master/LICENSE.md)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/oprypin/markdown-callouts/ci.yml.svg)](https://github.com/oprypin/markdown-callouts/actions?query=event%3Apush+branch%3Amaster)
 
 [python-markdown]: https://python-markdown.github.io/

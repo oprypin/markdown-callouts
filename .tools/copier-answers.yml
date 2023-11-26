@@ -1,0 +1,13 @@
+_commit: 7d6f4ceea
+_src_path: gh:oprypin/py-project-template
+copyright_date: '2021'
+mkdocs: true
+mkdocs_install_self: true
+project_description: 'Markdown extension: a classier syntax for admonitions'
+project_name: markdown-callouts
+pytest: true
+python_distribution_name: markdown-callouts
+python_source_path: markdown_callouts
+repository_name: oprypin/markdown-callouts
+script_test: false
+
