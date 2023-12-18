@@ -4,7 +4,7 @@ import bs4
 import pytest
 from markdown import Markdown
 
-from markdown_callouts import CalloutsExtension
+from markdown_callouts.callouts import CalloutsExtension
 
 
 @pytest.mark.golden_test("extension/**/*.yml")

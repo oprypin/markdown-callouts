@@ -42,7 +42,7 @@ Issues = "https://github.com/oprypin/markdown-callouts/issues"
 History = "https://github.com/oprypin/markdown-callouts/releases"
 
 [project.entry-points."markdown.extensions"]
-callouts = "markdown_callouts:CalloutsExtension"
+callouts = "markdown_callouts.callouts:CalloutsExtension"
 
 [tool.hatch.version]
 path = "markdown_callouts/__init__.py"
