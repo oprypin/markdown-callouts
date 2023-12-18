@@ -1,0 +1,28 @@
+input: |
+  > [!Warning]
+
+  hi
+  > [!Warning]
+  >
+  <!-- -->
+  >[!Warning]  
+output: |-
+  <blockquote>
+    <p>
+      [!Warning]
+    </p>
+  </blockquote>
+  <p>
+    hi
+  </p>
+  <blockquote>
+    <p>
+      [!Warning]
+    </p>
+  </blockquote>
+  <!-- -->
+  <blockquote>
+    <p>
+      [!Warning]
+    </p>
+  </blockquote>

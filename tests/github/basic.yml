@@ -1,0 +1,12 @@
+input: |
+  > [!Note]
+  > Hello, world!
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      Hello, world!
+    </p>
+  </div>
