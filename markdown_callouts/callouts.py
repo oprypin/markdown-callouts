@@ -8,8 +8,6 @@ from markdown.blockprocessors import BlockQuoteProcessor
 from markdown.extensions import Extension
 from markdown.treeprocessors import Treeprocessor
 
-__version__ = "0.3.0"
-
 
 # Based on https://github.com/Python-Markdown/markdown/blob/4acb949256adc535d6e6cd84c4fb47db8dda2f46/markdown/blockprocessors.py#L277
 class _CalloutsBlockProcessor(BlockQuoteProcessor):
