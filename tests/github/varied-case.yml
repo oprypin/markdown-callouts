@@ -1,5 +1,5 @@
 input: |
-  > [!info]
+  > [!important]
   > Foo
 
   > [!TIP]
@@ -8,9 +8,9 @@ input: |
   > [!NoTe]
   > Foo
 output: |-
-  <div class="admonition info">
+  <div class="admonition important">
     <p class="admonition-title">
-      Info
+      Important
     </p>
     <p>
       Foo

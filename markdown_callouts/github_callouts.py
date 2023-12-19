@@ -11,7 +11,8 @@ from markdown.extensions import Extension
 # Based on https://github.com/Python-Markdown/markdown/blob/4acb949256adc535d6e6cd84c4fb47db8dda2f46/markdown/blockprocessors.py#L277
 class _GitHubCalloutsBlockProcessor(BlockQuoteProcessor):
     REGEX = re.compile(
-        r"((?:^|\n) *(?:[^>].*)?(?:^|\n)) {0,3}> *\[!([A-Za-z]{3,})\] *\n(?: *> *\n)*() *(?:> *[^\s\n]|[^\s\n>])"
+        r"((?:^|\n) *(?:[^>].*)?(?:^|\n)) {0,3}> *\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\] *\n(?: *> *\n)*() *(?:> *[^\s\n]|[^\s\n>])",
+        flags=re.IGNORECASE,
     )
 
     def test(self, parent, block):
@@ -31,7 +32,10 @@ class _GitHubCalloutsBlockProcessor(BlockQuoteProcessor):
         self.parser.parseBlocks(parent, [before])
         kind = m[2]
 
-        admon = etree.SubElement(parent, "div", {"class": "admonition " + kind.lower()})
+        css_class = kind.lower()
+        if css_class == "caution":
+            css_class = "danger"
+        admon = etree.SubElement(parent, "div", {"class": "admonition " + css_class})
         title = etree.SubElement(admon, "p", {"class": "admonition-title"})
         title.text = kind.title()
 

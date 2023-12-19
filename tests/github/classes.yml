@@ -1,0 +1,56 @@
+input: |
+  > [!NOTE]
+  > foo
+
+  > [!TIP]
+  > foo
+
+  > [!IMPORTANT]
+  > foo
+
+  > [!WARNING]
+  > foo
+
+  > [!CAUTION]
+  > foo
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      foo
+    </p>
+  </div>
+  <div class="admonition tip">
+    <p class="admonition-title">
+      Tip
+    </p>
+    <p>
+      foo
+    </p>
+  </div>
+  <div class="admonition important">
+    <p class="admonition-title">
+      Important
+    </p>
+    <p>
+      foo
+    </p>
+  </div>
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+    <p>
+      foo
+    </p>
+  </div>
+  <div class="admonition danger">
+    <p class="admonition-title">
+      Caution
+    </p>
+    <p>
+      foo
+    </p>
+  </div>
