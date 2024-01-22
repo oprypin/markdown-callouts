@@ -1,0 +1,25 @@
+input: |
+  > [!Warning]
+  a
+
+  <!-- -->
+
+  > [!Warning]
+  >>
+output: |-
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+    <p>
+      a
+    </p>
+  </div>
+  <!-- -->
+  <div class="admonition warning">
+    <p class="admonition-title">
+      Warning
+    </p>
+    <blockquote>
+    </blockquote>
+  </div>

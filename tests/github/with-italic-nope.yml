@@ -1,0 +1,26 @@
+input: |
+  > *[!Note]*
+  > foo
+  <!-- -->
+  > [*!Note*]
+  > foo
+output: |-
+  <blockquote>
+    <p>
+      <em>
+        [!Note]
+      </em>
+      foo
+    </p>
+  </blockquote>
+  <!-- -->
+  <blockquote>
+    <p>
+      [
+      <em>
+        !Note
+      </em>
+      ]
+  foo
+    </p>
+  </blockquote>

@@ -1,0 +1,17 @@
+input: |
+  > [!INFO]
+  > foo
+
+  > [!TIPSY]
+  > foo
+output: |-
+  <blockquote>
+    <p>
+      [!INFO]
+  foo
+    </p>
+    <p>
+      [!TIPSY]
+  foo
+    </p>
+  </blockquote>

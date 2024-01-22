@@ -1,0 +1,14 @@
+input: |
+  > aaa
+  > [!Note]
+  > bbb
+  > ccc
+output: |-
+  <blockquote>
+    <p>
+      aaa
+  [!Note]
+  bbb
+  ccc
+    </p>
+  </blockquote>

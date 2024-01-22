@@ -1,0 +1,21 @@
+input: |
+  > [!Note]
+  > foo
+  >
+  > > [!Note]
+  > bar
+output: |-
+  <div class="admonition note">
+    <p class="admonition-title">
+      Note
+    </p>
+    <p>
+      foo
+    </p>
+    <blockquote>
+      <p>
+        [!Note]
+  bar
+      </p>
+    </blockquote>
+  </div>

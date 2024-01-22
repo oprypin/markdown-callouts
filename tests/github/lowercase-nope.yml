@@ -1,0 +1,11 @@
+input: |
+  > **note**: foo
+output: |-
+  <blockquote>
+    <p>
+      <strong>
+        note
+      </strong>
+      : foo
+    </p>
+  </blockquote>
