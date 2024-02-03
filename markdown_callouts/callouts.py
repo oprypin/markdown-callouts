@@ -11,14 +11,14 @@ from markdown.treeprocessors import Treeprocessor
 
 # Based on https://github.com/Python-Markdown/markdown/blob/4acb949256adc535d6e6cd84c4fb47db8dda2f46/markdown/blockprocessors.py#L277
 class _CalloutsBlockProcessor(BlockQuoteProcessor):
-    REGEX = re.compile(r"(^ {0,3}>([!?])? ?|\A)([A-Z]{2,}):([ \n])(.*)", flags=re.M)
+    REGEX = re.compile(r"(^ {0,3}>([!?])? ?|\A)([A-Z]{2,}):([ \n])(.*)", flags=re.MULTILINE)
 
     def test(self, parent: etree.Element, block: str) -> bool:
         m = self.REGEX.search(block)
         return (
             m is not None
             and (m[1] or not self.parser.state.isstate("blockquote"))
-            and not util.nearing_recursion_limit()  # type: ignore
+            and not util.nearing_recursion_limit()
         )
 
     def run(self, parent: etree.Element, blocks: list[str]) -> None:
@@ -142,7 +142,7 @@ class CalloutsExtension(Extension):
         super().__init__(**kwargs)
 
     def extendMarkdown(self, md: Markdown) -> None:
-        parser = md.parser  # type: ignore
+        parser = md.parser
         parser.blockprocessors.register(
             _CalloutsBlockProcessor(parser),
             "callouts",
@@ -155,4 +155,4 @@ class CalloutsExtension(Extension):
         )
 
 
-makeExtension = CalloutsExtension
+makeExtension = CalloutsExtension  # NOQA: N816

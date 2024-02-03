@@ -25,5 +25,5 @@ def test_extension(request, golden):
     output = md.convert(golden["input"])
     soup = bs4.BeautifulSoup(output, features="html.parser")
     html = soup.prettify().rstrip("\n")
-    html = re.sub(r"^( *)", r"\1\1", html, flags=re.M)
+    html = re.sub(r"^( *)", r"\1\1", html, flags=re.MULTILINE)
     assert html == golden.out["output"]
