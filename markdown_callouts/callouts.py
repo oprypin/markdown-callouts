@@ -52,7 +52,7 @@ class _CalloutsBlockProcessor(BlockQuoteProcessor):
 
 
 class _CalloutsTreeprocessor(Treeprocessor):
-    def __init__(self, strip_period: bool) -> None:
+    def __init__(self, *, strip_period: bool) -> None:
         super().__init__()
         self.strip_period = strip_period
 
@@ -149,10 +149,10 @@ class CalloutsExtension(Extension):
             21,  # Right before blockquote
         )
         md.treeprocessors.register(
-            _CalloutsTreeprocessor(self.getConfig("strip_period")),
+            _CalloutsTreeprocessor(strip_period=self.getConfig("strip_period")),
             "callouts",
             19,  # Right after inline
         )
 
 
-makeExtension = CalloutsExtension  # NOQA: N816
+makeExtension = CalloutsExtension  # noqa: N816

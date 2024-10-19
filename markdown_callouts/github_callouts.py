@@ -45,7 +45,8 @@ class _GitHubCalloutsBlockProcessor(BlockQuoteProcessor):
 
 
 class GitHubCalloutsExtension(Extension):
-    def extendMarkdown(self, md: Markdown) -> None:
+    @classmethod
+    def extendMarkdown(cls, md: Markdown) -> None:
         parser = md.parser
         parser.blockprocessors.register(
             _GitHubCalloutsBlockProcessor(parser),
@@ -54,4 +55,4 @@ class GitHubCalloutsExtension(Extension):
         )
 
 
-makeExtension = GitHubCalloutsExtension  # NOQA: N816
+makeExtension = GitHubCalloutsExtension  # noqa: N816
