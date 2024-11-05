@@ -79,6 +79,21 @@ massa, nec semper lorem quam in massa.
 </td></tr>
 </table>
 
+### Support GitHub "alerts" style of admonitions
+
+To enable, add to mkdocs.yml:
+```
+markdown_extensions:
+  - github-callouts
+```
+This can be used instead of, or in addition to, the other callouts extension shipped by this package. This adds support for [GitHub-style alerts](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts).
+
+The syntax is:
+```
+> [!NOTE]
+> Lorem ipsum dolor sit amet.
+```
+
 ---
 
 **Continue to the [documentation site][].**
