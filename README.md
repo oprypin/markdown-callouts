@@ -8,7 +8,7 @@
 
 [python-markdown]: https://python-markdown.github.io/
 [admonition]: https://python-markdown.github.io/extensions/admonition/
-[mkdocs]: https://www.mkdocs.org/
+[properdocs]: https://github.com/ProperDocs/properdocs#readme
 [documentation site]: https://oprypin.github.io/markdown-callouts/
 
 ## Installation
@@ -17,7 +17,7 @@
 pip install markdown-callouts
 ```
 
-If using MkDocs, [enable the extension in **mkdocs.yml**](https://www.mkdocs.org/user-guide/configuration/#markdown_extensions):
+If using [ProperDocs][], [enable the extension in **properdocs.yml**](https://properdocs.org/user-guide/configuration/#markdown_extensions):
 
 ```yaml
 markdown_extensions:
@@ -81,7 +81,7 @@ massa, nec semper lorem quam in massa.
 
 ### Support GitHub "alerts" style of admonitions
 
-To enable, add to mkdocs.yml:
+To enable, add to properdocs.yml:
 ```
 markdown_extensions:
   - github-callouts

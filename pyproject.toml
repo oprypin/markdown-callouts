@@ -7,7 +7,7 @@ name = "markdown-callouts"
 description = "Markdown extension: a classier syntax for admonitions"
 readme = "README.md"
 license = "MIT"
-keywords = ["markdown", "extensions"]
+keywords = ["properdocs", "mkdocs", "markdown", "extensions"]
 authors = [
     {name = "Oleh Prypin", email = "oleh@pryp.in"},
 ]
