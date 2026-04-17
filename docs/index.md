@@ -5,7 +5,7 @@
 [python-markdown]: https://python-markdown.github.io/
 [admonition]: https://python-markdown.github.io/extensions/admonition/
 [details]: https://facelessuser.github.io/pymdown-extensions/extensions/details/
-[mkdocs]: https://www.mkdocs.org/
+[properdocs]: https://github.com/ProperDocs/properdocs#readme
 
 ## Installation
 
@@ -13,7 +13,7 @@
 pip install markdown-callouts
 ```
 
- *  If using MkDocs, [enable the extension in **mkdocs.yml**](https://www.mkdocs.org/user-guide/configuration/#markdown_extensions):
+ *  If using ProperDocs, [enable the extension in **properdocs.yml**](https://properdocs.org/user-guide/configuration/#markdown_extensions):
 
     ```yaml
     markdown_extensions:
@@ -202,7 +202,7 @@ The produced HTML is the same with [both][admonition] [extensions][details] that
     </details>
     ```
 
-You may notice that the HTML contains no explicit styling whatsoever. That is because that's supposed to be handled through CSS that accompanies it. In case of MkDocs, that's handled by themes -- if they choose to support styling for the classes `.admonition`, `.admonition-title` or the tags `details`, `summary`.
+You may notice that the HTML contains no explicit styling whatsoever. That is because that's supposed to be handled through CSS that accompanies it. In case of ProperDocs, that's handled by themes -- if they choose to support styling for the classes `.admonition`, `.admonition-title` or the tags `details`, `summary`.
 
 In addition to the always-present class `admonition`, another CSS class will be added that is equal to the title of the "callout", in lowercase. The stylesheet can then choose to specially distinguish the style for a few select identifiers out of those. ([Example theme](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types))
 
