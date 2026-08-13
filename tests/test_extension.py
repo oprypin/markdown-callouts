@@ -19,7 +19,7 @@ def test_extension(request, golden):
     extensions = [
         extension(**config)
         for key, extension in extension_styles.items()
-        if f"{key}/" in request.node.name or "all/" in request.node.name
+        if key in golden.path.parts or "all" in golden.path.parts
     ]
     md = Markdown(extensions=extensions)
     output = md.convert(golden["input"])
